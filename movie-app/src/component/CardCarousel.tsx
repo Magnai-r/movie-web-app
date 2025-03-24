@@ -1,34 +1,40 @@
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { Play } from "lucide-react";
+import { log } from "node:console";
 type CarouselProps = {
-  status: string;
+  id: number;
+  backdrop_path: string | null;
+  original_title: string;
+  overview: string;
   title: string;
-  imgUrl: string;
-  description: string;
-  cardButton: string;
-  rating: string;
+  vote_average: number;
 };
+type NowPlaying = { currentPlaying: CarouselProps };
+export const CardCarousel = ({ currentPlaying }: NowPlaying) => {
+  console.log(currentPlaying.title, "PLAYING NOWWW");
 
-export const CardCarousel = ({
-  title,
-  imgUrl,
-  status,
-  description,
-  rating,
-}: CarouselProps) => {
+  const imgUrl = "https://image.tmdb.org/t/p/original";
   return (
-    <div className="h-[900px] relative">
-      <img className="w-full object-cover" src={imgUrl} />
+    <div className="h-[900px] w-full relative">
+      <img
+        className="w-full object-cover"
+        src={`${imgUrl}${currentPlaying.backdrop_path}`}
+        alt={currentPlaying.title}
+      />
       <div className="absolute bottom-30 left-30">
-        <p className="text-white text-4">{status}</p>
-        <p className="text-[36px] font-bold text-white">{title}</p>
+        <p className="text-white text-2xl">Now Playing:</p>
+        <p className="text-[36px] font-bold text-white">
+          {currentPlaying.original_title}
+        </p>
         <div className="flex items-center gap-2">
-          <Star color="yellow" size={20} />
-          <span className="text-white text-[20px] font-bold">{rating}</span>
+          <Star color="yellow" fill="yellow" size={20} />
+          <span className="text-white text-[20px] font-bold">
+            {currentPlaying.vote_average}
+          </span>
           <span className="text-white">/10</span>
         </div>
-        <p className="text-white w-100 py-4">{description}</p>
+        <p className="text-white w-100 py-4">{currentPlaying.overview}</p>
         <Button className="bg-white text-black hover:text-white">
           <Play />
           WatchTrailer

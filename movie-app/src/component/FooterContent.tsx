@@ -16,7 +16,7 @@ export const FooterContent = () => {
             © 2024 Movie Z. All Rights Reserved.
           </p>
         </div>
-        <div className="flex justify-end items-start gap-24">
+        <div className="flex w-full justify-end items-start gap-24">
           <div className="flex h-50 flex-col gap-3 items-start">
             <p className="text-sm text-[#FAFAFA] font-normal">
               Contact Information

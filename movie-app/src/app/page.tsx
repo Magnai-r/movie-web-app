@@ -1,5 +1,5 @@
 "use client";
-import { Footer, FooterContent } from "@/component/FooterContent";
+import { FooterContent } from "@/component/FooterContent";
 import { MovieScrollCarousel } from "@/component/MovieScrollCarousel";
 import { NavigationBar } from "@/component/NavigationBar";
 import { PopularMovies } from "@/component/PopularMovies";
