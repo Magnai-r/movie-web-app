@@ -12,7 +12,7 @@ type CarouselProps = {
 };
 type NowPlaying = { currentPlaying: CarouselProps };
 export const CardCarousel = ({ currentPlaying }: NowPlaying) => {
-  console.log(currentPlaying.title, "PLAYING NOWWW");
+  console.log(currentPlaying.title, "PLAYING NOW");
 
   const imgUrl = "https://image.tmdb.org/t/p/original";
   return (
