@@ -60,7 +60,7 @@ export const NavigationBar = () => {
                           See lists of movies by genre
                         </p>
                       </div>
-                      <div className="flex p-4 flex-col items-center self-stretch gap-[10px] border-b border-black"></div>
+                      <div className="flex p-4 flex-col items-center self-stretch gap-[10px] border-t border-black"></div>
                       <div className="flex items-start content-start gap-4 self-stretch flex-wrap">
                         {allGenre?.map((genre) => (
                           <AllGenres key={genre.id} genre={genre} />
