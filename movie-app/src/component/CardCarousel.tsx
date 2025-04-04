@@ -1,8 +1,8 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Star } from "lucide-react";
 import { Play } from "lucide-react";
-import { log } from "node:console";
-type CarouselProps = {
+type CarouselData = {
   id: number;
   backdrop_path: string | null;
   original_title: string;
@@ -10,13 +10,19 @@ type CarouselProps = {
   title: string;
   vote_average: number;
 };
-type NowPlaying = { currentPlaying: CarouselProps };
-export const CardCarousel = ({ currentPlaying }: NowPlaying) => {
+type NowPlaying = { currentPlaying: CarouselData };
+export const CardCarousel = ({
+  currentPlaying,
+  onClick,
+}: {
+  currentPlaying: NowPlaying;
+  onClick: () => void;
+}) => {
   console.log(currentPlaying.title, "PLAYING NOW");
 
   const imgUrl = "https://image.tmdb.org/t/p/original";
   return (
-    <div className="h-[900px] w-full relative">
+    <div onClick={onClick} className="h-[900px] w-full relative">
       <img
         className="w-full object-cover"
         src={`${imgUrl}${currentPlaying.backdrop_path}`}

@@ -5,3 +5,4 @@ export * from "./FooterContent";
 export * from "./UpComingMovies";
 export * from "./PopularMovies";
 export * from "./TopRatedMovies";
+export * from "./AllGenres";

@@ -1,10 +1,11 @@
-"use cleint";
+"use client";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { MovielistCard } from "./MovieLIstCard";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { log } from "console";
+import { axiosInstance } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+
 export interface UpComingMoviesData {
   name: string;
   id: number;
@@ -17,10 +18,10 @@ export interface UpComingMoviesData {
 
 export const UpComingMovies = () => {
   const [upComingFilm, setUpComingFilm] = useState<UpComingMoviesData[]>([]);
-
+  const router = useRouter();
   const fetchData = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289&`
+    const { data } = await axiosInstance.get(
+      `/movie/upcoming?language=en-US&page=1`
     );
     setUpComingFilm(data.results);
   };
@@ -28,6 +29,10 @@ export const UpComingMovies = () => {
     fetchData();
   }, []);
   console.log(upComingFilm, "UpComingFilm");
+
+  const handleOnClick = (movieId: string) => {
+    router.push(`/detail/${movieId}`);
+  };
 
   return (
     <div className="px-20 py-13">
@@ -42,7 +47,13 @@ export const UpComingMovies = () => {
       </div>
       <div className="flex flex-wrap gap-8">
         {upComingFilm.slice(0, 10).map((movie) => (
-          <MovielistCard key={movie.id} movie={movie} />
+          <MovielistCard
+            onClick={() => {
+              handleOnClick(movie.id);
+            }}
+            key={movie.id}
+            movie={movie}
+          />
         ))}
       </div>
     </div>

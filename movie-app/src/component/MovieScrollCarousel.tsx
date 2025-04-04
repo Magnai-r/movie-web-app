@@ -9,6 +9,8 @@ import {
 import { CardCarousel } from "./CardCarousel";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
+import { axiosInstance } from "@/lib/utils";
 export interface NowPlayingMovieData {
   id: number;
   original_title: string;
@@ -20,22 +22,30 @@ export interface NowPlayingMovieData {
 
 export const MovieScrollCarousel = () => {
   const [NowPlaying, setNowPlaying] = useState<NowPlayingMovieData[]>([]);
-
+  const router = useRouter();
   const fetchData = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1&page=1&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289&`
+    const { data } = await axiosInstance.get(
+      "movie/now_playing?language=en-US&page=1"
     );
     setNowPlaying(data.results);
   };
   useEffect(() => {
     fetchData();
   }, []);
+  const handleOnClick = (movieId: string) => {
+    router.push(`/detail/${movieId}`);
+  };
   return (
     <div className="flex w-full h-[900px] justify-center items-center">
       <Carousel>
         <CarouselContent>
           {NowPlaying.slice(0, 3).map((currentPlaying) => (
-            <CarouselItem key={currentPlaying.id}>
+            <CarouselItem
+              onClick={() => {
+                handleOnClick(currentPlaying.id);
+              }}
+              key={currentPlaying.id}
+            >
               <CardCarousel currentPlaying={currentPlaying} />
             </CarouselItem>
           ))}

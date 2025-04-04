@@ -1,3 +1,4 @@
+"use client";
 import { Star } from "lucide-react";
 type Movie = {
   id: number;
@@ -10,12 +11,21 @@ type Movie = {
 
 type MovieType = { movie: Movie };
 
-export const MovielistCard = ({ movie }: MovieType) => {
+export const MovielistCard = ({
+  movie,
+  onClick,
+}: {
+  movie: MovieType;
+  onClick: () => void;
+}) => {
   const imgUrl = "https://image.tmdb.org/t/p/w300";
   return (
-    <div className="flex w-[230px] flex-col border rounded-md">
+    <div
+      onClick={onClick}
+      className="flex w-[230px] flex-col border rounded-md"
+    >
       <img
-        className="w-[230px] h-[340px] rounded-t-2xl"
+        className="w-[230px] h-[340px] rounded-md"
         src={
           movie.poster_path ? `${imgUrl}${movie.poster_path}` : "NoImage.png"
         }

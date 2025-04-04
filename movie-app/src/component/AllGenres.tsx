@@ -10,7 +10,7 @@ type GenreType = { genre: Genres };
 export const AllGenres = ({ genre }: GenreType) => {
   return (
     <div>
-      <Button>
+      <Button className="bg-[#E4E4E7] text-black border">
         <p>{genre.name}</p>
         <ChevronRight />
       </Button>

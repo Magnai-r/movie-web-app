@@ -5,6 +5,8 @@ import { MovielistCard } from "./MovieLIstCard";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { log } from "console";
+import { axiosInstance } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 export interface PopularMoviesData {
   name: string;
   id: number;
@@ -17,10 +19,10 @@ export interface PopularMoviesData {
 
 export const PopularMovies = () => {
   const [popularFilm, setPopularFilm] = useState<PopularMoviesData[]>([]);
-
+  const router = useRouter();
   const fetchData = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289&`
+    const { data } = await axiosInstance.get(
+      `/movie/popular?language=en-US&page=1&page=1`
     );
     setPopularFilm(data.results);
   };
@@ -29,6 +31,10 @@ export const PopularMovies = () => {
     fetchData();
   }, []);
   console.log(popularFilm, "PopularFilm");
+
+  const handleOnClick = (movieId: string) => {
+    router.push(`/detail/${movieId}`);
+  };
 
   return (
     <div className="px-20 py-13">
@@ -43,7 +49,13 @@ export const PopularMovies = () => {
       </div>
       <div className="flex flex-wrap gap-8">
         {popularFilm.slice(0, 10).map((movie) => (
-          <MovielistCard key={movie.id} movie={movie} />
+          <MovielistCard
+            onClick={() => {
+              handleOnClick(movie.id);
+            }}
+            key={movie.id}
+            movie={movie}
+          />
         ))}
       </div>
     </div>

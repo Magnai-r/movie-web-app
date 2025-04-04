@@ -13,6 +13,7 @@ import axios from "axios";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { AllGenres } from "./AllGenres";
+import { axiosInstance } from "@/lib/utils";
 export interface GenresData {
   id: number;
   name: string;
@@ -22,8 +23,8 @@ export const NavigationBar = () => {
   const [allGenre, setAllGenre] = useState<GenresData[]>([]);
 
   const fetchData = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/genre/movie/list?language=en-US&page=1&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289&`
+    const { data } = await axiosInstance.get(
+      "genre/movie/list?language=en-US&page=1"
     );
 
     setAllGenre(data.genres);
@@ -61,7 +62,7 @@ export const NavigationBar = () => {
                         </p>
                       </div>
                       <div className="flex p-4 flex-col items-center self-stretch gap-[10px] border-t border-black"></div>
-                      <div className="flex items-start content-start gap-4 self-stretch flex-wrap">
+                      <div className="flex items-start content-start gap-4 self-stretch flex-wrap ">
                         {allGenre?.map((genre) => (
                           <AllGenres key={genre.id} genre={genre} />
                         ))}

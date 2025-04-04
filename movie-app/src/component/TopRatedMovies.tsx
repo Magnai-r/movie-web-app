@@ -4,6 +4,8 @@ import { ArrowRight } from "lucide-react";
 import { MovielistCard } from "./MovieLIstCard";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { axiosInstance } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export interface TopRatedMoviesData {
   name: string;
@@ -17,10 +19,10 @@ export interface TopRatedMoviesData {
 
 export const TopRatedMovies = () => {
   const [topRatedFilm, setTopRatedFilm] = useState<TopRatedMoviesData[]>([]);
-
+  const router = useRouter();
   const fetchData = async () => {
-    const { data } = await axios.get(
-      `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1&page=1&api_key=d67d8bebd0f4ff345f6505c99e9d0289&`
+    const { data } = await axiosInstance.get(
+      `/movie/top_rated?language=en-US&page=1&page=1`
     );
     setTopRatedFilm(data.results);
   };
@@ -28,6 +30,10 @@ export const TopRatedMovies = () => {
     fetchData();
   }, []);
   console.log(topRatedFilm, "TopRatedFilm");
+
+  const handleOnClick = (movieId: string) => {
+    router.push(`/detail/${movieId}`);
+  };
 
   return (
     <div className="flex w-full h-full flex-col px-20 ">
@@ -42,7 +48,11 @@ export const TopRatedMovies = () => {
       </div>
       <div className="flex flex-wrap gap-8">
         {topRatedFilm.slice(0, 10).map((movie) => (
-          <MovielistCard key={movie.id} movie={movie} />
+          <MovielistCard
+            onClick={() => handleOnClick(movie.id)}
+            key={movie.id}
+            movie={movie}
+          />
         ))}
       </div>
     </div>
